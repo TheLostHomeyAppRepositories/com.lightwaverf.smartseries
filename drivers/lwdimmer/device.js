@@ -104,7 +104,7 @@ module.exports = class lwdimmer extends Homey.Device
             this.homey.app.updateLog(`${this.getName()} Failed to create webhooks ${err}`);
             return false;
         }
-        
+
         return true;
     }
 

@@ -50,6 +50,33 @@ module.exports = class lwenergy extends Homey.Device
 		if (changedKeys.indexOf('classType') >= 0)
 		{
 			this.setClass(newSettings.classType);
+			if (newSettings.classType === 'evcharger')
+			{
+				this.setEnergy({
+					cumulative: false,
+					evCharger: true,
+					meterPowerImportedCapability: 'meter_power',
+				});
+
+				if (!this.hasCapability('evcharger_charging_state'))
+				{
+					this.addCapability('evcharger_charging_state').catch(this.error);
+				}
+				this.homey.app.updateLog(`${this.getName()}: Energy settings updated for evcharger`);
+			}
+			else
+			{
+				this.setEnergy({
+					cumulative: true,
+					evCharger: false,
+					cumulativeImportedCapability: 'meter_power',
+				});
+				if (this.hasCapability('evcharger_charging_state'))
+				{
+					this.removeCapability('evcharger_charging_state').catch(this.error);
+				}
+				this.homey.app.updateLog(`${this.getName()}: Energy settings updated for normal`);
+			}
 		}
 	}
 
