@@ -12,7 +12,13 @@
     "capabilities": [
 		"measure_battery"
     ],
-    "pair": [
+	"energy": {
+		"batteries": [
+			"AA",
+			"AA"
+		]
+	},
+	"pair": [
         {
             "id": "my_connect"
         },
